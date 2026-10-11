@@ -1,11 +1,11 @@
-import { chmod, mkdir, readFile, writeFile } from "node:fs/promises";
-import { homedir } from "node:os";
-import { dirname, join } from "node:path";
+import { readFile } from "node:fs/promises";
+import { credentialPath, keepCredential } from "@red-cup-engineering/credential-custody-service/keep";
 
 /**
- * One API key per Buttondown newsletter. A newsletter's routing name (a persona's `buttondown` presence, a serial
- * manifest's `buttondownNewsletter`) resolves to `~/.config/561-group/buttondown/<newsletter>.api-key`, a 0600 file
- * holding the key and nothing else. The key never enters git, a record or a process-wide environment variable.
+ * One API key per Buttondown newsletter, a credential of the host's store. A newsletter's routing name (a persona's
+ * `buttondown` presence, a serial manifest's `buttondownNewsletter`) resolves to `buttondown/<newsletter>.api-key`
+ * in this process's credentials directory (CREDENTIALS_DIRECTORY), holding the key and nothing else. A key a person
+ * pastes is kept in the store (keepCredential); it never enters git, a record or a process-wide environment variable.
  */
 
 export const NEWSLETTER_NAME = /^[a-z0-9][a-z0-9_-]{0,63}$/u;
@@ -15,13 +15,14 @@ function newsletterName(newsletter) {
   return newsletter;
 }
 
-/** Where a newsletter's key lives. */
-export function newsletterKeyPath(newsletter, { home = process.env.HOME ?? homedir() } = {}) {
-  return join(home, ".config", "561-group", "buttondown", `${newsletterName(newsletter)}.api-key`);
+/** Where a newsletter's key is read. */
+export function newsletterKeyPath(newsletter, { env = process.env } = {}) {
+  return credentialPath(`buttondown/${newsletterName(newsletter)}.api-key`, env);
 }
 
-/** The newsletter's key, or null when none is held yet. */
+/** The newsletter's key, or null when none is held yet (or this process was given no credentials). */
 export async function readNewsletterKey(newsletter, options = {}) {
+  if (!(options.env ?? process.env).CREDENTIALS_DIRECTORY) return null;
   try {
     const key = (await readFile(newsletterKeyPath(newsletter, options), "utf8")).trim();
     return key || null;
@@ -38,12 +39,9 @@ export async function newsletterKey(newsletter, options = {}) {
   return key;
 }
 
-/** Hold a newsletter's key, 0600 under a 0700 directory. */
-export async function writeNewsletterKey(newsletter, key, options = {}) {
+/** Keep a newsletter's key in the host's credential store; returns where it is now read. */
+export async function writeNewsletterKey(newsletter, key, { env = process.env } = {}) {
   if (typeof key !== "string" || !key.trim() || /\s/u.test(key.trim())) throw new TypeError("a Buttondown key is one nonempty token");
-  const path = newsletterKeyPath(newsletter, options);
-  await mkdir(dirname(path), { recursive: true, mode: 0o700 });
-  await writeFile(path, `${key.trim()}\n`, { mode: 0o600 });
-  await chmod(path, 0o600);
-  return path;
+  const name = newsletterName(newsletter);
+  return (await keepCredential({ id: `buttondown.${name}`, service: "buttondown", path: `buttondown/${name}.api-key`, value: `${key.trim()}\n`, kind: "api-key", provider: "buttondown" }, env)).path;
 }

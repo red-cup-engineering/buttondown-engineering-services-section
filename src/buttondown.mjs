@@ -11,6 +11,36 @@ export const EMAIL_TYPES = Object.freeze(["public", "private", "premium"]);
 /** subscriber_type values Buttondown documents as settable through the API (docs.buttondown.com/api-subscribers-type). */
 export const SUBSCRIBER_PROGRAMMATIC_TYPES = Object.freeze(["regular", "unsubscribed", "gifted", "unpaid"]);
 
+/**
+ * The state of an email in the delivery lifecycle, from the `status` Buttondown reports
+ * (`normalizeEmailResponse(...).status`). Every status Buttondown documents maps to one state, so
+ * a caller never reads "not draft" as "sent": `scheduled` and `about_to_send` are
+ * `delivery-pending`, `paused` and `errored` are `delivery-obstructed`, `partially_sent` is its own.
+ */
+export const EMAIL_STATUS_STATES = Object.freeze({
+  draft: "draft",
+  managed_by_rss: "provider-managed",
+  imported: "provider-managed",
+  scheduled: "delivery-pending",
+  about_to_send: "delivery-pending",
+  in_flight: "delivery-active",
+  throttled: "delivery-active",
+  resending: "delivery-active",
+  paused: "delivery-obstructed",
+  errored: "delivery-obstructed",
+  partially_sent: "partially-sent",
+  transactional: "transactional",
+  suppressed: "suppressed",
+  sent: "sent",
+  deleted: "deleted",
+});
+
+/** @throws {TypeError} on a status Buttondown has not been read to define; an unknown state is not guessed. */
+export function classifyEmailStatus(status) {
+  if (!Object.hasOwn(EMAIL_STATUS_STATES, status)) throw new TypeError(`unknown Buttondown email status: ${JSON.stringify(status)}`);
+  return EMAIL_STATUS_STATES[status];
+}
+
 function apiUrl(path) {
   return `${API_ORIGIN}/${API_VERSION}${path}`;
 }

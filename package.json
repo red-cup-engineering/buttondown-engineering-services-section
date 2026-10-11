@@ -29,7 +29,8 @@
   "dependencies": {
     "@red-cup-engineering/ebook-engineering-services-section": "workspace:*",
     "@red-cup-engineering/javascript-node-services-section": "workspace:*",
-    "@red-cup-engineering/email-newsletter-engineering-services-section": "workspace:*"
+    "@red-cup-engineering/email-newsletter-engineering-services-section": "workspace:*",
+    "@red-cup-engineering/credential-custody-service": "workspace:*"
   },
   "engines": {
     "node": ">=22.18"
