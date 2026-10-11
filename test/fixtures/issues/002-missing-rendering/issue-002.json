@@ -1,0 +1,19 @@
+{
+  "title": "Fixture Newsletter — Issue 002",
+  "dek": "A second fixture dek.",
+  "sections": [
+    {
+      "heading": "Fixture Section Two",
+      "body-markdown": "Fixture body paragraph two.",
+      "sources": ["fixtureref2"]
+    }
+  ],
+  "references": {
+    "fixtureref2": {
+      "id": "fixtureref2",
+      "type": "webpage",
+      "title": "Fixture Reference Title Two",
+      "URL": "https://example.com/fixture-2"
+    }
+  }
+}

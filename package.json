@@ -1,0 +1,44 @@
+{
+  "name": "@red-cup-engineering/buttondown-services-section",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Buttondown newsletter API mechanics for the house's newsletters: one key per newsletter, drafts and sends, subscribers joined on their own request through Buttondown's double opt-in, tags, the advance-reader team as a review-copy roster, and the static sign-up form.",
+  "exports": {
+    ".": "./src/buttondown.mjs",
+    "./newsletter-keys": "./src/newsletter-keys.mjs",
+    "./scripts/publish-issue-draft.mjs": "./scripts/publish-issue-draft.mjs",
+    "./scripts/publish-serial-draft.mjs": "./scripts/publish-serial-draft.mjs",
+    "./provision": "./src/provision.mjs",
+    "./obligation-driver": "./src/obligation-driver.mjs"
+  },
+  "bin": {
+    "publish-newsletter-draft": "scripts/publish-issue-draft.mjs",
+    "publish-fiction-serial-draft": "scripts/publish-serial-draft.mjs",
+    "advance-reader-roster": "scripts/advance-reader-roster.mjs",
+    "subscribe-reader": "scripts/subscribe-reader.mjs"
+  },
+  "files": [
+    "src",
+    "scripts"
+  ],
+  "scripts": {
+    "check": "for f in src/*.mjs scripts/*.mjs test/*.mjs; do node --check \"$f\" || exit 1; done",
+    "test": "node --test test/*.test.mjs",
+    "verify": "npm run check && npm test"
+  },
+  "dependencies": {
+    "@red-cup-engineering/ebook-engineering-services-section": "workspace:*",
+    "@red-cup-engineering/javascript-node-services-section": "workspace:*",
+    "@red-cup-engineering/email-newsletter-engineering-services-section": "workspace:*"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "keywords": [
+    "sovereign-provider",
+    "buttondown",
+    "credential-blind",
+    "newsletter"
+  ],
+  "license": "UNLICENSED"
+}

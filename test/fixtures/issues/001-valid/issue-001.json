@@ -1,0 +1,19 @@
+{
+  "title": "Fixture Newsletter — Issue 001",
+  "dek": "A fixture dek for testing.",
+  "sections": [
+    {
+      "heading": "Fixture Section",
+      "body-markdown": "Fixture body paragraph.",
+      "sources": ["fixtureref"]
+    }
+  ],
+  "references": {
+    "fixtureref": {
+      "id": "fixtureref",
+      "type": "webpage",
+      "title": "Fixture Reference Title",
+      "URL": "https://example.com/fixture"
+    }
+  }
+}
