@@ -14,6 +14,8 @@ explicit parameters: `createDraftEmail`, `sendEmail`, `listSubscribers`,
 `taggedSubscribers`, `advanceReaderRoster` and `embedSubscribeForm`. The module
 never reads `process.env` or embeds a credential.
 
+`classifyEmailStatus` reads the `status` of a normalized email into a delivery state (`draft`, `provider-managed`, `delivery-pending`, `delivery-active`, `delivery-obstructed`, `partially-sent`, `transactional`, `suppressed`, `sent`, `deleted`) and refuses a status it has not been read to define.
+
 ## One key per newsletter
 
 Each newsletter the house runs (one per persona, one per serial) has its own

@@ -8,10 +8,10 @@ import { readNewsletterKey, writeNewsletterKey } from "./newsletter-keys.mjs";
  * publishing scripts read it (newsletter-keys.mjs); the key is never shown again or written anywhere else.
  *
  * The record's `result` is `{ "newsletter": "<routing name>" }`.
- * @param {{ home?: string, fetch?: typeof fetch }} [options]
+ * @param {{ env?: NodeJS.ProcessEnv, fetch?: typeof fetch }} [options]
  */
-export function buttondownKeyDriver({ home, fetch: fetchImpl = fetch } = {}) {
-  const where = home ? { home } : {};
+export function buttondownKeyDriver({ env = process.env, fetch: fetchImpl = fetch } = {}) {
+  const where = { env };
   return {
     kind: "buttondown-api-key",
     instances: (record) => [{ id: record.id, vars: { newsletter: record.result.newsletter } }],
