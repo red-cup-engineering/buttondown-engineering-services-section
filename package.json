@@ -27,10 +27,10 @@
     "verify": "npm run check && npm test"
   },
   "dependencies": {
-    "@red-cup-engineering/ebook-engineering-services-section": "workspace:*",
-    "@red-cup-engineering/javascript-node-services-section": "workspace:*",
-    "@red-cup-engineering/email-newsletter-engineering-services-section": "workspace:*",
-    "@red-cup-engineering/credential-custody-service": "workspace:*"
+    "@red-cup-engineering/ebook-engineering-services-section": "0.3.3",
+    "@red-cup-engineering/javascript-node-services-section": "0.3.1",
+    "@red-cup-engineering/email-newsletter-engineering-services-section": "0.1.0",
+    "@red-cup-engineering/credential-custody-service": "0.1.1"
   },
   "engines": {
     "node": ">=22.18"
@@ -41,5 +41,6 @@
     "credential-blind",
     "newsletter"
   ],
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "private": false
 }
