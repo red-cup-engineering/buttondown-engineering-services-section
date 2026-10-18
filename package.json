@@ -3,6 +3,11 @@
   "version": "0.2.1",
   "type": "module",
   "description": "Buttondown newsletter API mechanics for the house's newsletters: one key per newsletter, drafts and sends, subscribers joined on their own request through Buttondown's double opt-in, tags, the advance-reader team as a review-copy roster, and the static sign-up form.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/computer-web-engineering-services-section.git",
+    "directory": "services/web-platform-services-section/services/web2-platform-services-section/services/buttondown-services-section"
+  },
   "exports": {
     ".": "./src/buttondown.mjs",
     "./newsletter-keys": "./src/newsletter-keys.mjs",
