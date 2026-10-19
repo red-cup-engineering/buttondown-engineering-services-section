@@ -1,0 +1,20 @@
+{
+  "type": "StoryBible",
+  "version": 1,
+  "signature": {
+    "characters": [
+      { "id": "mei", "name": "Mei Lin", "pov": true }
+    ],
+    "places": [],
+    "lexicon": []
+  },
+  "arc": ["arrival", "recognition", "departure"],
+  "knowledge": [
+    { "id": "bell", "holder": "mei", "learner": "mei", "fact": "The bell remembers." }
+  ],
+  "outline": [
+    { "episode": 1, "summary": "Mei reaches the harbor and hears a bell beneath the water." },
+    { "episode": 2, "summary": "她在旧码头找到了那口钟，却发现钟声记得她。" },
+    { "episode": 3, "summary": "Mei chooses what must leave with the tide." }
+  ]
+}

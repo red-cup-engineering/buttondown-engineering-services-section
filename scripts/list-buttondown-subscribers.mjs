@@ -1,6 +1,6 @@
 import { subscriberCounts } from "../src/buttondown.mjs";
 import { newsletterKey } from "../src/newsletter-keys.mjs";
-import { runJavascriptNodeOperation } from "@red-cup-engineering/javascript-node-services-section/operation";
+import { runJavascriptNodeOperation } from "@red-cup-engineering/javascript-node-operation-engineering-services-section/operation";
 
 /**
  * Print one newsletter's subscriber counts by type, for each `{"newsletter": name}`

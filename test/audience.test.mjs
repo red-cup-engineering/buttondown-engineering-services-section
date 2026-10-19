@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, stat } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
@@ -98,15 +98,19 @@ test("the hosted subscribe page carries each tag as a query parameter", () => {
   assert.throws(() => subscribePageUrl({ newsletter: "bad name" }), /names its Buttondown newsletter/u);
 });
 
-test("each newsletter's key is one 0600 file named by its routing name", async () => {
+test("each newsletter's key is one 0600 file named by its routing name", async (t) => {
   const home = await mkdtemp(join(tmpdir(), "buttondown-keys-"));
-  assert.equal(await readNewsletterKey("sigridsong", { home }), null);
-  await assert.rejects(newsletterKey("sigridsong", { home }), /persona-provision/u);
-  const path = await writeNewsletterKey("sigridsong", "abc123\n", { home });
-  assert.equal(path, newsletterKeyPath("sigridsong", { home }));
-  assert.equal(path, join(home, ".config", "561-group", "buttondown", "sigridsong.api-key"));
+  t.after(() => rm(home, { recursive: true, force: true }));
+  const env = { CREDENTIALS_DIRECTORY: join(home, "credentials"), CREDENTIALS_STORE: join(home, "store"), CREDENTIALS_HOST: "fixture" };
+  const { openStore } = await import("@red-cup-engineering/credential-custody-service/store");
+  await openStore(env.CREDENTIALS_STORE).initHost(env.CREDENTIALS_HOST);
+  assert.equal(await readNewsletterKey("sigridsong", { env }), null);
+  await assert.rejects(newsletterKey("sigridsong", { env }), /persona-provision/u);
+  const path = await writeNewsletterKey("sigridsong", "abc123\n", { env });
+  assert.equal(path, newsletterKeyPath("sigridsong", { env }));
+  assert.equal(path, join(env.CREDENTIALS_DIRECTORY, "buttondown", "sigridsong.api-key"));
   assert.equal((await stat(path)).mode & 0o777, 0o600);
   assert.equal(await readFile(path, "utf8"), "abc123\n");
-  assert.equal(await newsletterKey("sigridsong", { home }), "abc123");
-  assert.throws(() => newsletterKeyPath("../etc", { home }), /routing name/u);
+  assert.equal(await newsletterKey("sigridsong", { env }), "abc123");
+  assert.throws(() => newsletterKeyPath("../etc", { env }), /routing name/u);
 });
