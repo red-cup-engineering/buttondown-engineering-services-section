@@ -1,0 +1,9 @@
+{
+  "canon": "story-bible.json",
+  "serial": "Glass Harbor",
+  "cadence": "weekly",
+  "freeEpisodes": [1, 2],
+  "buttondownNewsletter": "glass-harbor",
+  "language": "zh",
+  "script": "Hans"
+}

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 import { publishSerialDraft } from "../scripts/publish-serial-draft.mjs";
 
-const sourceFixture = fileURLToPath(new URL("../node_modules/@red-cup-engineering/email-newsletter-engineering-services-section/test/fixtures/fiction-serial", import.meta.url));
+const sourceFixture = fileURLToPath(new URL("./fixtures/fiction-serial", import.meta.url));
 
 function fixtureCopy() {
   const workRoot = mkdtempSync(join(tmpdir(), "fiction-serial-publish-"));
