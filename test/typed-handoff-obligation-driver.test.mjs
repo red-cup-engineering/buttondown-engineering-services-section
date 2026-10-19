@@ -4,6 +4,7 @@ import { mkdtempSync, existsSync, readFileSync, rmSync, statSync } from "node:fs
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { buttondownKeyDriver } from "../src/obligation-driver.mjs";
+import { openStore } from "@red-cup-engineering/credential-custody-service/store";
 
 const source=Object.freeze({
  recordKind:"group-human-handoff",handoffId:"buttondown-sigridsong-api-key",
@@ -12,7 +13,10 @@ const source=Object.freeze({
 test("original Buttondown driver receives named typed newsletter and keeps accepted fixture key only in credential custody",async t=>{
  const root=mkdtempSync(join(tmpdir(),"buttondown-typed-handoff-"));
  t.after(()=>rmSync(root,{recursive:true,force:true}));
- const env={CREDENTIALS_DIRECTORY:join(root,"credentials")};
+ // Isolated synthetic custody: no real host, credential, repository or remote.
+ const env={CREDENTIALS_DIRECTORY:join(root,"credentials"),
+   CREDENTIALS_STORE:join(root,"store"),CREDENTIALS_HOST:"fixture"};
+ await openStore(env.CREDENTIALS_STORE).initHost(env.CREDENTIALS_HOST);
  const token="testfixtureABCDEFGHIJKLMNOP1234567890";
  const fetch=async(url,request)=>{
   assert.equal(request.method,"GET");
