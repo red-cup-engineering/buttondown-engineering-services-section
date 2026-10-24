@@ -1,4 +1,4 @@
-# @red-cup-engineering/buttondown-engineering-services-section
+# @red-cup-engineering/buttondown-services-section
 
 <!-- 561-group-standards:badges:start -->
 [![Red Cup Engineering](https://img.shields.io/badge/561%20Group-Red%20Cup%20Engineering-c0392b)](https://github.com/red-cup-engineering)
@@ -150,7 +150,7 @@ labeled as inference in the source code's JSDoc, not claimed as verified.
 ## Usage
 
 ```js
-import { createDraftEmail, listSubscribers, sendEmail, subscriberCounts } from "@red-cup-engineering/buttondown-engineering-services-section";
+import { createDraftEmail, listSubscribers, sendEmail, subscriberCounts } from "@red-cup-engineering/buttondown-services-section";
 
 const draft = await createDraftEmail({ token, fetch, subject: "Issue #1", body: "# Hello\n\nMarkdown body." });
 await sendEmail({ token, fetch, emailId: draft.id });
