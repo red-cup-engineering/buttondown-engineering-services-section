@@ -1,5 +1,5 @@
 {
-  "name": "@red-cup-engineering/buttondown-engineering-services-section",
+  "name": "@red-cup-engineering/buttondown-services-section",
   "version": "0.2.2-dev.0",
   "type": "module",
   "description": "Buttondown newsletter API mechanics for the house's newsletters: one key per newsletter, drafts and sends, subscribers joined on their own request through Buttondown's double opt-in, tags, the advance-reader team as a review-copy roster, and the static sign-up form.",
