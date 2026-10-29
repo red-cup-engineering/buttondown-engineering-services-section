@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -61,6 +61,8 @@ test("recomposes stale renderings, creates a Buttondown draft, and records a rec
 test("refuses cleanly, before any network call, without the newsletter's key", async () => {
   const { workRoot, issueDir, dataRoot } = tempCopyOf("001-valid");
   try {
+    const names = ["issue.md", "issue.paste.html", "issue.feed-item.rss.xml"];
+    const before = names.map((name) => readFileSync(join(issueDir, name), "utf8"));
     const calls = [];
     const refusingFetch = async () => {
       calls.push(true);
@@ -76,8 +78,12 @@ test("refuses cleanly, before any network call, without the newsletter's key", a
       /no Buttondown key/u,
     );
     assert.equal(calls.length, 0);
-    // Recompose (a local, keyless step) still ran ahead of the refusal.
-    assert.doesNotMatch(readFileSync(join(issueDir, "issue.md"), "utf8"), /STALE/u);
+    assert.deepEqual(
+      names.map((name) => readFileSync(join(issueDir, name), "utf8")),
+      before,
+      "denied publication must not rewrite approved source previews or their feed dates",
+    );
+    assert.equal(existsSync(dataRoot), false, "no draft receipt or empty publication directory");
   } finally {
     rmSync(workRoot, { recursive: true, force: true });
   }
