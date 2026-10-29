@@ -95,11 +95,12 @@ export async function publishIssueDraft(issueDir, options = {}) {
   const issueJsonPath = await locateIssueJson(resolvedIssueDir);
   const issue = JSON.parse(readFileSync(issueJsonPath, "utf8"));
 
+  // A refused submission must leave the caller's reviewed source and dated
+  // renderings untouched. Validate effect preconditions before composeIssue writes.
   if (!feedLink) throw new Error("publish-issue-draft: feedLink is required");
+  if (!token) throw new Error("publish-issue-draft: no Buttondown key for this newsletter; refusing to create a Buttondown draft");
   const link = feedLink;
   const { files } = composeIssue(issue, resolvedIssueDir, { link, pubDate: publishDate, format });
-
-  if (!token) throw new Error("publish-issue-draft: no Buttondown key for this newsletter; refusing to create a Buttondown draft");
 
   const body = readFileSync(files.markdown, "utf8");
   const draft = await createDraftEmail({
