@@ -25,7 +25,7 @@ never reads `process.env` or embeds a credential.
 
 ## One key per newsletter
 
-Each newsletter the house runs (one per persona, one per serial) has its own
+Each newsletter the Group runs (one per persona, one per serial) has its own
 Buttondown account and key. `src/newsletter-keys.mjs` resolves a newsletter's
 routing name — a persona's `buttondown` presence, a serial manifest's
 `buttondownNewsletter` — to `~/.config/561-group/buttondown/<newsletter>.api-key`,
