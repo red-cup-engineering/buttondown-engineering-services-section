@@ -1,4 +1,4 @@
-# @red-cup-engineering/buttondown-services-section
+# @red-cup-engineering/buttondown-engineering-services-section
 
 <!-- 561-group-standards:badges:start -->
 [![Red Cup Engineering](https://img.shields.io/badge/561%20Group-Red%20Cup%20Engineering-c0392b)](https://github.com/red-cup-engineering)
@@ -6,6 +6,8 @@
 [![Indigenous data: CARE](https://img.shields.io/badge/Indigenous%20data-CARE-4b6f44)](https://github.com/red-cup-engineering/.github/blob/main/GOVERNANCE.md)
 [![Tips welcome](https://img.shields.io/badge/tips-welcome-d4a017)](https://github.com/561-group/.github/blob/main/TIPS.md)
 <!-- 561-group-standards:badges:end -->
+
+Buttondown newsletter API mechanics for the house's newsletters: one key per newsletter, drafts and sends, subscribers joined on their own request through Buttondown's double opt-in, tags, the advance-reader team as a review-copy roster, and the static sign-up form.
 
 Credential-blind Buttondown platform API client — the org's
 newsletter-delivery rail. Seated as the publishing-platform sibling of
