@@ -114,10 +114,10 @@ export async function publishIssueDraft(issueDir, options = {}) {
 
   const recordedAt = new Date().toISOString();
   mkdirSync(dataRoot, { recursive: true });
-  const receipt = { recordedAt, issueDir: resolvedIssueDir, issueTitle: issue.title, feedLink: link, files, draft };
-  appendFileSync(join(dataRoot, "publications.jsonl"), JSON.stringify(receipt) + "\n", { mode: 0o600 });
+  const record = { recordedAt, issueDir: resolvedIssueDir, issueTitle: issue.title, feedLink: link, files, draft };
+  appendFileSync(join(dataRoot, "publications.jsonl"), JSON.stringify(record) + "\n", { mode: 0o600 });
 
-  return { issueDir: resolvedIssueDir, issueTitle: issue.title, files, draft, receipt };
+  return { issueDir: resolvedIssueDir, issueTitle: issue.title, files, draft, receipt: record };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
