@@ -25,28 +25,11 @@
     "src",
     "scripts"
   ],
-  "scripts": {
-    "verify": "npm run check"
-  },
   "dependencies": {
     "@red-cup-engineering/credential-custody-computer-data-engineering-services-section": "^0.1.6",
     "@red-cup-engineering/ebook-engineering-services-section": "^0.4.7",
     "@red-cup-engineering/email-newsletter-engineering-services-section": "^0.1.3",
     "@red-cup-engineering/node-js-function-engineering-services-section": "^0.5.1"
   },
-  "engines": {
-    "node": ">=24.2.0"
-  },
-  "keywords": [
-    "sovereign-provider",
-    "buttondown",
-    "credential-blind",
-    "newsletter"
-  ],
-  "license": "MIT",
-  "private": false,
-  "funding": {
-    "type": "individual",
-    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
-  }
+  "license": "MIT"
 }
