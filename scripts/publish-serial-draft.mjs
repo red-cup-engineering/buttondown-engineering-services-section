@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
@@ -14,9 +15,7 @@ import { readNewsletterKey } from "../src/newsletter-keys.mjs";
 
 const EPISODE_FILE = /^(\d+)-.+\.md$/u;
 
-function digest(text) {
-  return createHash("sha256").update(text, "utf8").digest("hex");
-}
+
 
 function readRecords(path) {
   if (!existsSync(path)) return [];
@@ -86,7 +85,7 @@ export async function publishSerialDraft(serialDir, {
     buttondownNewsletter: manifest.buttondownNewsletter,
     episode: issue.episode,
     access: issue.access,
-    episodeDigest: `sha256:${digest(episodeText)}`,
+    episodeDigest: `sha256:${sha256Hex(episodeText)}`,
     draftId: draft?.id ?? null,
     time,
     mode: draft ? "draft" : "dry-run",
