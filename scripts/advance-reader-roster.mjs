@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { temporaryRoot } from "@red-cup-engineering/computer-file-engineering-services-section/temporary-directory";
+import { fileURLToPath } from "node:url";
 /**
  * Write a newsletter's advance-reader team as a private review-copy roster: every confirmed subscriber tagged
  * `advance-reader-team`, as `[{name, email, reference}]`, the roster kindle-publishing-system's
@@ -18,7 +20,7 @@ const { values } = parseArgs({ options: { newsletter: { type: "string" }, tag: {
 if (!values.newsletter) throw new Error("usage: advance-reader-roster --newsletter <name> [--tag <tag>] [--out <file>]");
 const roster = await advanceReaderRoster({ token: await newsletterKey(values.newsletter), fetch, newsletter: values.newsletter, tag: values.tag });
 const home = process.env.HOME ?? homedir();
-const out = resolve(values.out ?? join(process.env.XDG_STATE_HOME ?? join(home, ".local", "state"), "561-group", "review-copies", "rosters", `${values.newsletter}-${new Date().toISOString().slice(0, 10)}.json`));
+const out = resolve(temporaryRoot(fileURLToPath(new URL(".", import.meta.url))), "..", "review-copies-state", "rosters", `${values.newsletter}-${new Date().toISOString().slice(0, 10)}.json`);
 await mkdir(dirname(out), { recursive: true, mode: 0o700 });
 await writeFile(out, `${JSON.stringify(roster, null, 2)}\n`, { mode: 0o600 });
 await chmod(out, 0o600);

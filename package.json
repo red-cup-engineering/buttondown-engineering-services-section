@@ -29,7 +29,8 @@
     "@red-cup-engineering/credential-custody-computer-data-engineering-services-section": "^0.1.6",
     "@red-cup-engineering/ebook-engineering-services-section": "^0.4.7",
     "@red-cup-engineering/email-newsletter-engineering-services-section": "^0.1.3",
-    "@red-cup-engineering/node-js-function-engineering-services-section": "^0.5.1"
+    "@red-cup-engineering/node-js-function-engineering-services-section": "^0.5.1",
+    "@red-cup-engineering/computer-file-engineering-services-section": "^0.8.16"
   },
   "license": "MIT"
 }
