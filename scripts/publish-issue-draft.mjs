@@ -5,6 +5,8 @@
  * Buttondown DRAFT from the composed Markdown, and record a receipt.
  */
 
+import { put } from "@red-cup-engineering/semiotic-eavt-engineering-services-section/store";
+import { nowInstantText } from "@red-cup-engineering/time-data-engine";
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
@@ -112,10 +114,9 @@ export async function publishIssueDraft(issueDir, options = {}) {
     publishDate: scheduledPublishDate,
   });
 
-  const recordedAt = new Date().toISOString();
-  mkdirSync(dataRoot, { recursive: true });
+  const recordedAt = nowInstantText();
   const receipt = { recordedAt, issueDir: resolvedIssueDir, issueTitle: issue.title, feedLink: link, files, draft };
-  appendFileSync(join(dataRoot, "publications.jsonl"), JSON.stringify(receipt) + "\n", { mode: 0o600 });
+  put(dataRoot, "newsletter-publication", { event: "draft-created", time: recordedAt, subject: resolvedIssueDir, status: "draft", title: issue.title, feedLink: link, files, draft });
 
   return { issueDir: resolvedIssueDir, issueTitle: issue.title, files, draft, receipt };
 }
