@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { sha256Hex } from "@red-cup-engineering/semiotic-content-address-system";
-import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { basename, dirname, join, resolve } from "node:path";
