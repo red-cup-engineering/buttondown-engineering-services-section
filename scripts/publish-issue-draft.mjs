@@ -116,7 +116,7 @@ export async function publishIssueDraft(issueDir, options = {}) {
 
   const recordedAt = nowInstantText();
   const receipt = { recordedAt, issueDir: resolvedIssueDir, issueTitle: issue.title, feedLink: link, files, draft };
-  put(dataRoot, "newsletter-publication", { event: "draft-created", time: recordedAt, subject: resolvedIssueDir, status: "draft", title: issue.title, feedLink: link, files, draft });
+  put(dataRoot, "newsletter-publication", { event: "draft-created", time: recordedAt, subject: resolvedIssueDir, status: status ?? "draft", title: issue.title, feedLink: link, files, draft });
 
   return { issueDir: resolvedIssueDir, issueTitle: issue.title, files, draft, receipt };
 }
